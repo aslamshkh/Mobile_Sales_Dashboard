@@ -1,194 +1,221 @@
-# 📱 Mobile Sales Dashboard
+# 📱 Mobile Sales Dashboard (Power BI)
+Power BI • DAX • Power Query • Data Modelling • Sales Analytics
 
-## 📑 The Table Of Contents
-- [Purpose](#purpose)
-- [Performance Indicators](#performance-indicators)
-- [Data Overview](#data-overview)
-- [Initial Data Observations](#initial-data-observations)
-- [Data Loading](#data-loading)
-- [Data Cleaning And Transformation](#data-cleaning-and-transformation)
-- [Data Exploration And Key Insights](#data-exploration-and-key-insights)
-- [Dashboard Creation](#dashboard-creation)
+A complete end-to-end Power BI dashboard analyzing mobile phone sales across India.
+This project transforms raw transaction data into an interactive analytical report to uncover brand performance, customer behavior, payment patterns, and city-based sales distribution.
 
 ---
 
-## 🎯 Purpose
+## 📌 Dashboard Preview
 
-This project aims to enhance strategic decision-making in the mobile retail sector through a data-driven sales analytics dashboard. Built entirely in Microsoft Power BI, the solution leverages Power Query, DAX, and interactive visuals to analyze sales performance, customer behavior, and brand trends across India.
-
-The dashboard is designed for retail managers, marketing teams, and business analysts, transforming raw transactional data into a dynamic, filterable interface. It supports smarter inventory planning, targeted promotions, and a deeper understanding of consumer preferences. The solution is scalable, visually intuitive, and accessible via the Power BI Service—making it ideal for both internal reporting and public portfolio sharing.
+![Dashboard](Mobile%20Sale%20Dashboard.png)
 
 ---
 
-## 📊 Performance Indicators
-
-- **Total Sales**: Overall revenue generated from mobile phone transactions across all cities and brands.
-- **Total Quantity Sold**: Total number of mobile units sold during the selected time period.
-- **Total Transactions**: Number of completed sales transactions recorded in the dataset.
-- **Average Price per Unit**: Average selling price per mobile unit, calculated across all transactions.
-- **Customer Ratings**: Distribution of satisfaction scores (1 to 5 stars) provided by customers post-purchase.
-- **Sales by Brand and Model**: Revenue and quantity breakdown by individual mobile models and their respective brands.
-- **Payment Method Share**: Percentage distribution of transactions across payment modes (Cash, UPI, Credit Card, Debit Card).
-- **Sales by City**: Geographic distribution of sales volume and revenue across Indian cities.
-- **Sales by Day of Week**: Analysis of sales trends across weekdays to identify peak business days.
-
----
-
-## 📁 Data Overview
-
-This project is based on a publicly available dataset from a Github repositry. The dataset contains 3835 records and 14 columns, each representing key attributes of mobile phone sales such as transaction details, customer ratings, brand, and product specifications.
-
-## 🧾 Dataset Summary
-
-- **Format**: Excel 
-- **Rows**: 3835 (including header)  
-- **Columns**: 14 
-- **Time Period Covered**: 2021 to 2024 (based on dates)
+## 📑 Table of Contents
+- [Project Overview](#project-overview)
+- [Business Problem](#business-problem)
+- [Objectives](#objectives)
+- [Dataset Overview](#dataset-overview)
+- [Initial Observations](#initial-observations)
+- [Data Cleaning and Transformation](#data-cleaning-and-transformation)
+- [Data Model & DAX Measures](#data-model-&-dax-measures)
+- [Key Insights](#key-insights)
+- [Dashboard Features](#dashboard-features)
+- [Project Files](#project-files)
+- [How to Use](#how-to-use)
+- [Limitations](#limitations)
+- [Future Enhancements](#future-enhancements)
 
 ---
 
-## 🔍 Initial Data Observations
+## 📘 Project Overview
+This Power BI dashboard helps retail and sales teams understand:
 
-The dataset appeared mostly clean and structured, but a few adjustments were necessary to prepare it for analysis and dashboard creation:
+- How sales vary by brand, model, and city  
+- Which payment methods customers prefer  
+- Which days drive the most business  
+- How customer ratings correlate with sales  
+- How monthly sales fluctuate across the years  
 
-- Dates were split across three columns: Year, Month, and Date. These needed to be merged into a single column to support time-based filtering and trend analysis.
-- The Day Name column contained inconsistent values (e.g., "Fr" and "Friday") that required standardization for accurate weekday-level insights.
-- No direct column for Total Sale or Profit was available. However, Unit Sold and Price per Unit were present, allowing us to derive Total Sales using a calculated column.
-- No blank or empty cells were found in the dataset, which minimized the need for null handling.
+The dashboard is fully interactive with dynamic slicers for year, brand, payment method, and model.
 
 ---
 
-## 📥 Data Loading
+## ❗ Business Problem
+Mobile retailers need answers to critical questions:
 
-The dataset was first imported into Excel and then loaded into Power BI for transformation and modeling:
+- Which brands are performing the best?  
+- Which cities contribute most to total revenue?  
+- When are customer purchases highest?  
+- Are certain payment methods becoming more popular?  
+- How do customers perceive the products (ratings)?  
 
-- Imported the raw data into Excel using:  
-  **Data tab → Get Data → From File → From Text/CSV**
+This dashboard consolidates these insights into one unified view.
 
-- Verified the column structure and data types in the Navigator window to ensure proper alignment and formatting.
+---
 
-- Loaded the dataset into **Power BI Power Query Editor** for further cleaning and transformation before integrating it into the data model.
+## 🎯 Objectives
+- Clean and prepare raw sales data using Power Query  
+- Build a Power BI data model  
+- Create DAX measures for KPIs and analysis  
+- Develop interactive visuals for better decision-making  
+- Identify customer and product trends  
+
+---
+
+## 📁 Dataset Overview
+**Records:** 3,835  
+**Columns:** 14  
+**Format:** Excel  
+**Period:** 2021–2024  
+
+### Key Columns
+- Brand  
+- Model  
+- Quantity  
+- Price  
+- Payment Method  
+- Customer Rating  
+- City  
+- Date components (Year, Month, Day)  
+
+---
+
+##  Initial Observations
+- Date was split across three columns (Year, Month, Day) – needed merging  
+- Day names included inconsistencies (e.g., “Fr”, “Fri”, “Friday”)  
+- No direct revenue/profit column was present  
+- Dataset contained no blanks or nulls  
+- Data was well-structured but needed standardized columns for analysis  
 
 ---
 
 ## 🧹 Data Cleaning and Transformation
+Performed in Power Query.
 
-<details>
-<summary>1. Error and Column Quality Check</summary>
-
- Used **View > Column Quality** to check for errors, empty cells, and invalid entries.  
- ✅ No issues were found — all columns were clean and complete.
-
-</details>
-
-<details>
-<summary>2. Inspection Before Loading</summary>
-
- Verified column structure and data types in the **Navigator Window** before loading into Power Query Editor.  
- Ensured the correct Excel sheet was selected for transformation and modeling.
-
-</details>
-
-<details>
-<summary>3. Date Column Merging</summary>
-
- Merged the Year, Month, and Date columns into a single Date column using:  
- **Transform > Merge Columns**  
- - Added a separator  
- - Renamed the column  
- - Changed data type to **Date**
-
-</details>
-
-<details>
-<summary>4. Day Name Standardization</summary>
-
- Used **Transform > Replace Values** to clean inconsistent weekday names:  
- - "Fr" → "Friday"  
- - "Mon" → "Monday"  
- - "Sat" → "Saturday"  
- ...and so on for the full week.
-
-</details>
-
-<details>
-<summary>5. Customer Calendar Creation</summary>
-
- Created a custom date table to handle missing dates and enable dynamic slicers.
-
- - Used: **Home > New Query > Blank Query**  
- - Applied formula:  
-   `= List.Dates(#date(2021,01,01), 1461, #duration(1,0,0,0))`  
- - Renamed the column and query  
- - Changed data type to **Date**  
- - Extracted **Day Name** column for weekday analysis
-
-</details>
-
-<details>
-<summary>6. Duplicate Check</summary>
-
- Used **Home > Keep Rows > Keep Duplicates** to check for duplicate records.  
- ✅ No duplicate rows were found.
-
-</details>
-
-<details>
-<summary>7. Final Load</summary>
-
- Renamed the cleaned query and applied changes using:  
- **Home > Close & Apply**  
- Data was successfully loaded into Power BI for modeling and visualization.
-
-</details>
+### Steps
+1. Column Quality Check  
+2. Merged Year, Month, and Day into a single Date column  
+3. Standardized Day Name values  
+4. Created a Calendar Table  
+5. Verified duplicates (none found)  
+6. Created calculated column for Total Sales:  
+   `Total Sales = Quantity * Price`  
+7. Final load into the Power BI data model  
 
 ---
 
-## 💡 Data Exploration and Key Insights
+## 📐 Data Model & DAX Measures
 
-After completing the data cleaning and transformation steps, I explored the dataset using Power BI visuals and DAX measures to uncover trends in sales performance, customer behavior, a
-nd brand dynamics. The following insights were identified:
+### Key DAX Measures
 
-- Sales remained consistent across the three-year period, with slight dips observed in February and September.
-- Thursday and Saturday emerged as the highest-performing days in terms of total sales volume.
-- Vivo and Apple were the top-performing brands, both in terms of revenue and customer satisfaction.
-- The best-selling models were Vivo S1 (₹6.6M), Vivo V20 (₹6.4M), and iPhone 11 (₹5.7M).
-- Cash and UPI were the most preferred payment methods, together accounting for over 50% of all transactions.
-- Customer ratings were mostly positive, with the majority of feedback falling in the 4–5 star range.
-- Sales were concentrated in metro cities, indicating stronger demand in urban regions.
-- No extreme seasonal spikes were observed, suggesting steady demand throughout the year.
+```DAX
+Total Sales := SUM(Sales[Total Sales])
+
+Total Quantity := SUM(Sales[Quantity])
+
+Total Transactions := COUNTROWS(Sales)
+
+Average Price := DIVIDE(SUM(Sales[Total Sales]), SUM(Sales[Quantity]))
+
+Average Rating := AVERAGE(Sales[Customer Rating])
+```
 
 ---
 
-## 🛠️ Dashboard Creation
+## 📊 Key Insights
 
-The dashboard was built in Power BI with a clean, interactive layout designed for clarity, usability, and insight discovery. Key formatting and design steps included:
+### Sales Trends
+- Sales remained stable across the 3-year period  
+- February and September showed slight dips  
+- Thursday and Saturday were the best-performing days  
 
-- A consistent color scheme and layout to ensure visual balance and readability.
-- Slicers for Year, Month, Brand, Model, and Payment Method to enable dynamic filtering.
-- Custom tooltips and dynamic titles to enhance user experience and context awareness.
-- All visuals were arranged to guide the user from high-level KPIs to detailed breakdowns.
+### Brand Insights
+- Vivo and Apple dominated in revenue  
+- Best-selling models:
+  - Vivo S1 – ₹6.6M  
+  - Vivo V20 – ₹6.4M  
+  - iPhone 11 – ₹5.7M  
 
-### Visual Overview
+### Customer Behavior
+- Most ratings were 4–5 stars  
+- Indicates high customer satisfaction  
 
-- **KPI Cards**: Displayed Total Sales, Quantity Sold, Total Transactions, and Average Price per Unit for quick performance tracking.
+### Payment Insights
+- Cash and UPI together accounted for over 50% of transactions  
 
-- **Map Visual**: Showed geographic distribution of mobile sales across Indian cities.
+### Geographic Insights
+- Sales were strongest in major metro cities  
+- Indicates higher demand in urban regions  
 
-- **Line Chart**: Illustrated monthly quantity trends to identify seasonal patterns and dips.
+---
 
-- **Bar Charts**:
-  - Customer Ratings distribution (1 to 5 stars)
-  - Sales by Day of the Week
-  - Brand-wise performance in terms of revenue and transaction count
+## 🖥 Dashboard Features
 
-- **Pie Chart**: Represented the share of payment methods used (Cash, UPI, Credit Card, Debit Card).
+### KPI Cards
+- Total Sales  
+- Total Quantity  
+- Total Transactions  
+- Average Price  
 
-- **Table Visual**: Detailed sales and transaction data by mobile model and brand for granular analysis.
+### Filters / Slicers
+- Year  
+- Month  
+- Brand  
+- Model  
+- Payment Method  
 
-The dashboard was published to Power BI Service for web-based access and portfolio presentation.
+### Visuals
+- Map visual for city-wise sales  
+- Line chart for monthly quantity trends  
+- Bar charts:
+  - Customer Ratings  
+  - Sales by Day  
+  - Sales by Brand  
+  - Sales by Mobile Model  
+- Pie chart for Payment Mode distribution  
+- Detailed table for model-level breakdown  
 
-![image](https://github.com/aslamshkh/Mobile_Sales_Dashboard/blob/main/Mobile%20Sale%20Dashboard.png)
+---
 
+## 📂 Project Files
 
+```
+Mobile_Sales_Dashboard/
+│
+├── Mobile Sales Dashboard PB.I.pbix
+├── Mobile Sales Raw Data.xlsx
+├── Mobile Sale Dashboard.png
+├── Total Sales.png
+├── Transactions.png
+├── Average.png
+├── Max Icon.png
+├── Filter.png
+├── Mobile Logo.png
+└── README.md
+```
 
+---
+
+## 🧭 How to Use
+1. Download the `.pbix` file  
+2. Open in Power BI Desktop (latest version recommended)  
+3. Ensure data model loads correctly  
+4. Use slicers to explore different segments  
+5. Publish to Power BI Service if needed  
+
+---
+
+## ⚠ Limitations
+- No profit or cost column available  
+- Rating scale limited to 1–5 without additional review context  
+- Dataset lacks return/cancellation information  
+
+---
+
+## 🚀 Future Enhancements
+- Add forecasting with DAX or Power BI AI visuals  
+- Add customer segmentation using clustering  
+- Introduce profitability analysis with additional cost data  
+- Expand geographic granularity with GPS coordinates  
